@@ -6,17 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style media="screen">
       body {
-        background-color: #FFFFFF;
+        background-color: #8ADEFE;
+        margin: 0;
+        padding: 0;
       }
       header {
-        background-color: #04213F;
-        color: #111111;
+        background-color: #F72B3B;
+        color: #111;
+        height: 1em;
+      }
+      header span, header p {
+        padding: 1em;
+      }
+      .left {
+        float: left;
+      }
+      .right {
+        float: right;
+      }
+      #pages {
+        width: 100%;
+        height: auto;
+      }
+      .page {
+        text-align: center;
+        height: 100px;
       }
     </style>
   </head>
   <body>
     <header>
-      <h1>Index</h1>
+      <div class="left">
+        <span>
+          Index
+        </span>
+      </div>
+      <div class="right">
+        <span>
+          Frank-JJ
+        </span>
+      </div>
     </header>
+
+    <div id="pages">
+      <div class="page" style="background-image: url("")">
+        <h1>DnD Tools</h1>
+      </div>
+      <div class="page">
+        <h1>Some other page</h1>
+      </div>
+    </div>
   </body>
 </html>
