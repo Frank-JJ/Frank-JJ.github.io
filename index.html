@@ -4,33 +4,25 @@
     <meta charset="utf-8">
     <title>Index</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
     <style media="screen">
-      body {
-        background-color: #8ADEFE;
-        margin: 0;
-        padding: 0;
-      }
-      header {
-        background-color: #F72B3B;
-        color: #111;
-        height: 1em;
-      }
-      header span, header p {
-        padding: 1em;
-      }
-      .left {
-        float: left;
-      }
-      .right {
-        float: right;
-      }
       #pages {
         width: 100%;
         height: auto;
       }
       .page {
         text-align: center;
-        height: 100px;
+        margin: 0;
+        padding: 1em;
+      }
+      h1 {
+        margin: 0;
+      }
+      .e {
+        background-color: #39CCCC;
+      }
+      .u {
+        background-color: #01FF70;
       }
     </style>
   </head>
@@ -38,7 +30,9 @@
     <header>
       <div class="left">
         <span>
-          Index
+          <a href="index.html">
+            Index
+          </a>
         </span>
       </div>
       <div class="right">
@@ -49,12 +43,21 @@
     </header>
 
     <div id="pages">
-      <div class="page" style="background-image: url("")">
-        <h1>DnD Tools</h1>
-      </div>
-      <div class="page">
-        <h1>Some other page</h1>
-      </div>
+        <div class="page e">
+          <a href="#">
+            <h1>DnD Tools</h1>
+          </a>
+        </div>
+        <div class="page u">
+          <a href="pages/mazeGenerator/mazeGenerator.html">
+            <h1>Maze Generator</h1>
+          </a>
+        </div>
+        <div class="page e">
+          <a href="#">
+            <h1>Some other page</h1>
+          </a>
+        </div>
     </div>
   </body>
 </html>
