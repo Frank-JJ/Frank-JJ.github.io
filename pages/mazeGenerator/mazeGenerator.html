@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <title>Maze Generator</title>
     <link rel="stylesheet" href="../../index.css">
+    <style media="screen">
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -28,7 +33,9 @@
         </span>
       </div>
     </header>
-    <canvas id="canvas" width="300" height="300"></canvas>
-    <script src="mazeGenerator.js" charset="utf-8"></script>
+    <div class="jumbotron">
+      <canvas id="canvas" width="600" height="600"></canvas>
+      <script src="mazeGenerator.js" charset="utf-8"></script>
+    </div>
   </body>
 </html>

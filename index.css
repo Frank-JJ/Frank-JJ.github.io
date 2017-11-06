@@ -22,3 +22,13 @@ a {
   margin: 0;
   padding: 0;
 }
+.jumbotron {
+  width: 800px;
+  height: auto;
+  padding: 1em;
+  margin: auto;
+  margin-top: 1em;
+  background-color: #3D9970;
+  border-radius: 10px;
+  text-align: center;
+}
