@@ -37,8 +37,8 @@ function Cell(c, r) {
 
   //Draw the four walls, in the order Top-Right-Bottom-Left
   this.show = function() {
-    if (this.current || this.fl) {
-      this.color = "#bfbfbf";
+    if (this.current && !done || this.fl) {
+      this.color = "#187318";
     }else if (this.visited) {
       this.color = "#4d4d4d";
     }
@@ -141,28 +141,34 @@ function run() {
   }
   if (done) {
     clearInterval(interval);
-  }else {
-    current.visited = true;
-    show();
-    var [next,r] = current.checkNeighbors();
-    // console.log([next,r]);
-    // console.log(neighbor);
-    if (next) {
-      current.walls[r] = false;
-      next.walls[(r+2)%4] = false;
-      next.before = current;
-      current.current = false;
-      next.current = true;
-      current = next;
-    }else if (current.before) {
-      next = current.before;
-      current.current = false;
-      next.current = true;
-      current = next;
-    }else {
-      done = true;
-      console.log("done");
+    function rCell() {
+      return grid[Math.floor(Math.random() * grid.length)];
+      if (cell == current) {
+        rCell();
+      }
     }
+    rCell().fl = true;
+  }
+  current.visited = true;
+  show();
+  var [next,r] = current.checkNeighbors();
+  // console.log([next,r]);
+  // console.log(neighbor);
+  if (next) {
+    current.walls[r] = false;
+    next.walls[(r+2)%4] = false;
+    next.before = current;
+    current.current = false;
+    next.current = true;
+    current = next;
+  }else if (current.before) {
+    next = current.before;
+    current.current = false;
+    next.current = true;
+    current = next;
+  }else {
+    done = true;
+    console.log("done");
   }
 }
 
