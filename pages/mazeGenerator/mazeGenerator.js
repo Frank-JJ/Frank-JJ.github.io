@@ -101,7 +101,7 @@ function Cell(c, r) {
   }
 }
 
-var CELLSIZE = canvas.width/10,
+var CELLSIZE = canvas.width/20,
 cols = Math.floor(canvas.width / CELLSIZE),
 rows = Math.floor(canvas.height / CELLSIZE),
 grid = [],
@@ -169,9 +169,11 @@ function run() {
 createCells();
 show();
 setup();
+var interval;
 function live(live) {
   if (live) {
-    var interval = setInterval(function () {
+    interval = setInterval(function () {
+      run();
     }, 1000/FRAMERATE);
   }else {
     while (!done) {
@@ -179,4 +181,4 @@ function live(live) {
     }
   }
 }
-live(false)
+live(true);
