@@ -101,7 +101,7 @@ function Cell(c, r) {
   }
 }
 
-var CELLSIZE = canvas.width/20,
+var CELLSIZE = canvas.width/40,
 cols = Math.floor(canvas.width / CELLSIZE),
 rows = Math.floor(canvas.height / CELLSIZE),
 grid = [],
