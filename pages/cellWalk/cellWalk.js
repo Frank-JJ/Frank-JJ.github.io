@@ -15,6 +15,10 @@ function line(x0,y0,x1,y1,color) {
   canvasContext.stroke();
 }
 
+function randomCell() {
+  return grid[Math.ceil(Math.random() * rows) - 1][Math.ceil(Math.random() * columns) - 1];
+}
+
 function Cell(column, row, cellSize, wallColor) {
   this.column = column;
   this.row = row;
@@ -67,7 +71,8 @@ grid = [],
 WALLCOLOR = "black",
 listener = new window.keypress.Listener(),
 FRAMERATE = 60,
-PC;
+PC,
+Mob;
 
 function generateGrid() {
   for (var r = 0; r < rows; r++) {
@@ -78,6 +83,19 @@ function generateGrid() {
   }
 }
 
+function generatePC() {
+  var PC_Cell = randomCell();
+  return new Entity(PC_Cell, CELLSIZE, "green", 10);
+}
+
+function generateMob() {
+  var Mob_Cell = randomCell();
+  if (Mob_Cell.column == PC.column && Mob_Cell.row == PC.row) {
+    generateMob();
+  }
+  return new Entity(Mob_Cell, CELLSIZE, "red", 10);
+}
+
 function show() {
   rect(0, 0, canvas.width, canvas.height, "white");
   for (var r = 0; r < grid.length; r++) {
@@ -86,12 +104,14 @@ function show() {
     }
   }
   PC.show();
+  Mob.show();
 }
 
 
 function setup() {
   generateGrid();
-  PC = new Entity(grid[Math.ceil(rows / 2) - 1][Math.ceil(columns / 2) - 1], CELLSIZE, "red", 10);
+  PC = generatePC();
+  Mob = generateMob();
   show();
   listener.simple_combo("up", function () {
     console.log("up");
