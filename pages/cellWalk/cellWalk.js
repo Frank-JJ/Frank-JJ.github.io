@@ -21,10 +21,10 @@ function Cell(column, row, cellSize, wallColor) {
   this.cellSize = cellSize;
   this.wallColor = wallColor
   this.x = function () {
-    this.column * CELLSIZE;
+    return this.column * CELLSIZE;
   }
   this.y = function () {
-    this.row * CELLSIZE;
+    return this.row * CELLSIZE;
   }
   this.walls = [true,true,true,true];
   this.show = function () {
@@ -50,10 +50,10 @@ function Entity(cell, size, color, hp) {
   this.color = color;
   this.hp = hp;
   this.x = function () {
-    this.column * CELLSIZE;
+    return this.column * CELLSIZE;
   }
   this.y = function () {
-    this.row * CELLSIZE;
+    return this.row * CELLSIZE;
   }
   this.show = function () {
     rect(this.x() + 1, this.y() + 1, this.size - 2, this.size - 2, this.color);
@@ -101,19 +101,19 @@ function setup() {
   });
   listener.simple_combo("right", function functionName() {
     console.log("right");
-    if (PC.col < columns) {
+    if (PC.column < columns - 1) {
       PC.column += 1;
     }
   });
   listener.simple_combo("down", function functionName() {
     console.log("down");
-    if (PC.row < rows) {
+    if (PC.row < rows - 1) {
       PC.row += 1;
     }
   });
   listener.simple_combo("left", function functionName() {
     console.log("left");
-    if (PC.col > 0) {
+    if (PC.column > 0) {
       PC.column -= 1;
     }
   });
