@@ -31,6 +31,7 @@ function Cell(column, row, cellSize, wallColor) {
     return this.row * CELLSIZE;
   }
   this.walls = [true,true,true,true];
+  this.entity;
   this.show = function () {
     if (this.walls[0]) {
       line(this.x(), this.y(), this.x() + this.cellSize, this.y(), this.color);
@@ -43,6 +44,9 @@ function Cell(column, row, cellSize, wallColor) {
     }
     if (this.walls[3]) {
       line(this.x(), this.y() + this.cellSize, this.x(), this.y(), this.color);
+    }
+    if (this.entity != undefined) {
+       console.log(this.column + " " + this.row + "have" + this.entity + " as entity");
     }
   }
 }
@@ -62,6 +66,7 @@ function Entity(cell, size, color, hp) {
   this.show = function () {
     rect(this.x() + 1, this.y() + 1, this.size - 2, this.size - 2, this.color);
   }
+  console.log(this);
 }
 
 var CELLSIZE = 40,
@@ -72,7 +77,8 @@ WALLCOLOR = "black",
 listener = new window.keypress.Listener(),
 FRAMERATE = 60,
 PC,
-Mob;
+Mob,
+entities = [];
 
 function generateGrid() {
   for (var r = 0; r < rows; r++) {
@@ -81,11 +87,15 @@ function generateGrid() {
       grid[r].push(new Cell(c, r, CELLSIZE, WALLCOLOR));
     }
   }
+  // console.log("Grid Generated");
 }
 
 function generatePC() {
   var PC_Cell = randomCell();
-  return new Entity(PC_Cell, CELLSIZE, "green", 10);
+  PC = new Entity(PC_Cell, CELLSIZE, "green", 10);
+  PC_Cell.entity = PC;
+  entities.push(PC);
+  console.log("PC Generated");
 }
 
 function generateMob() {
@@ -93,7 +103,10 @@ function generateMob() {
   if (Mob_Cell.column == PC.column && Mob_Cell.row == PC.row) {
     generateMob();
   }
-  return new Entity(Mob_Cell, CELLSIZE, "red", 10);
+  Mob = new Entity(Mob_Cell, CELLSIZE, "red", 10);
+  Mob_Cell.entity = Mob;
+  entities.push(Mob);
+  console.log("Mob Generated in cell" + Mob_Cell);
 }
 
 function show() {
@@ -103,26 +116,28 @@ function show() {
       grid[r][c].show();
     }
   }
-  PC.show();
-  Mob.show();
 }
 
 
 function setup() {
   generateGrid();
-  PC = generatePC();
-  Mob = generateMob();
+  generatePC();
+  generateMob();
   show();
   listener.simple_combo("up", function () {
     console.log("up");
     if (PC.row > 0) {
-      PC.row -= 1;
+      if (PC.row < Mob.row || PC.row > Mob.row + 1 || PC.column < Mob.column || PC.column > Mob.column) {
+        PC.row -= 1;
+      }
     }
   });
   listener.simple_combo("right", function functionName() {
     console.log("right");
     if (PC.column < columns - 1) {
-      PC.column += 1;
+      if (PC.row < Mob.row || PC.row > Mob.row || PC.column < Mob.column || PC.column > Mob.column) {
+        PC.column += 1;
+      }
     }
   });
   listener.simple_combo("down", function functionName() {
@@ -144,6 +159,6 @@ function run() {
 }
 
 setup();
-setInterval(function () {
-  run();
-}, 1000 / FRAMERATE);
+// setInterval(function () {
+//   run();
+// }, 1000 / FRAMERATE);
