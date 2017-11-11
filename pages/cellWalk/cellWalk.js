@@ -15,6 +15,18 @@ function line(x0,y0,x1,y1,color) {
   canvasContext.stroke();
 }
 
+function random(min, max) {
+ return Math.random() * (max - min) + min;
+}
+
+function floor(n) {
+  return Math.floor(n);
+}
+
+function ceil() {
+  return Math.ciel(n);
+}
+
 function randomCell() {
   return grid[Math.ceil(Math.random() * rows) - 1][Math.ceil(Math.random() * columns) - 1];
 }
@@ -46,7 +58,7 @@ function Cell(column, row, cellSize, wallColor) {
       line(this.x(), this.y() + this.cellSize, this.x(), this.y(), this.color);
     }
     if (this.entity != undefined) {
-       console.log(this.column + " " + this.row + "have" + this.entity + " as entity");
+      this.entity.show();
     }
   }
 }
@@ -66,7 +78,7 @@ function Entity(cell, size, color, hp) {
   this.show = function () {
     rect(this.x() + 1, this.y() + 1, this.size - 2, this.size - 2, this.color);
   }
-  console.log(this);
+  // console.log(this);
 }
 
 var CELLSIZE = 40,
@@ -80,85 +92,33 @@ PC,
 Mob,
 entities = [];
 
-function generateGrid() {
+function generateGrid(columns, rows) {
   for (var r = 0; r < rows; r++) {
-    grid.push([]);
+    grid[r] = [];
     for (var c = 0; c < columns; c++) {
-      grid[r].push(new Cell(c, r, CELLSIZE, WALLCOLOR));
+      grid[r][c] = new Cell(c, r, CELLSIZE, WALLCOLOR);
     }
   }
-  // console.log("Grid Generated");
+  // console.log(grid);
 }
 
-function generatePC() {
-  var PC_Cell = randomCell();
-  PC = new Entity(PC_Cell, CELLSIZE, "green", 10);
-  PC_Cell.entity = PC;
-  entities.push(PC);
-  console.log("PC Generated");
-}
-
-function generateMob() {
-  var Mob_Cell = randomCell();
-  if (Mob_Cell.column == PC.column && Mob_Cell.row == PC.row) {
-    generateMob();
-  }
-  Mob = new Entity(Mob_Cell, CELLSIZE, "red", 10);
-  Mob_Cell.entity = Mob;
-  entities.push(Mob);
-  console.log("Mob Generated in cell" + Mob_Cell);
-}
-
-function show() {
-  rect(0, 0, canvas.width, canvas.height, "white");
-  for (var r = 0; r < grid.length; r++) {
-    for (var c = 0; c < grid[r].length; c++) {
-      grid[r][c].show();
-    }
+rect(0, 0, canvas.width, canvas.height, "white");
+generateGrid(columns, rows);
+for (var r = 0; r < grid.length; r++) {
+  for (var c = 0; c < grid[r].length; c++) {
+    grid[r][c].show();
   }
 }
 
+var
+r = floor(random(1, rows)),
+c = floor(random(1, columns));
 
-function setup() {
-  generateGrid();
-  generatePC();
-  generateMob();
-  show();
-  listener.simple_combo("up", function () {
-    console.log("up");
-    if (PC.row > 0) {
-      if (PC.row < Mob.row || PC.row > Mob.row + 1 || PC.column < Mob.column || PC.column > Mob.column) {
-        PC.row -= 1;
-      }
-    }
-  });
-  listener.simple_combo("right", function functionName() {
-    console.log("right");
-    if (PC.column < columns - 1) {
-      if (PC.row < Mob.row || PC.row > Mob.row || PC.column < Mob.column || PC.column > Mob.column) {
-        PC.column += 1;
-      }
-    }
-  });
-  listener.simple_combo("down", function functionName() {
-    console.log("down");
-    if (PC.row < rows - 1) {
-      PC.row += 1;
-    }
-  });
-  listener.simple_combo("left", function functionName() {
-    console.log("left");
-    if (PC.column > 0) {
-      PC.column -= 1;
-    }
-  });
+grid[r][c].entity =  new Entity(grid[r][c], CELLSIZE, "red", 10);
+// console.log(grid);
+
+for (var r = 0; r < grid.length; r++) {
+  for (var c = 0; c < grid[r].length; c++) {
+    grid[r][c].show();
+  }
 }
-
-function run() {
-  show();
-}
-
-setup();
-// setInterval(function () {
-//   run();
-// }, 1000 / FRAMERATE);
